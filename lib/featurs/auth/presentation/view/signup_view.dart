@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sehati_app/core/funcs/email_validate.dart';
 
+import '../../../../core/funcs/routing.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/text_style.dart';
 import '../../../../core/widgets/custom_dialog.dart';
+import '../../../patient/home/presentaion/nav_bar.dart';
 import '../view_model/auth_cubit.dart';
 import '../view_model/auth_state.dart';
+import 'doctor_upload_view.dart';
 import 'login_view.dart';
 
 class RegisterView extends StatefulWidget {
@@ -14,7 +17,8 @@ class RegisterView extends StatefulWidget {
   final int index;
 
   @override
-  _RegisterViewState createState() => _RegisterViewState();
+  State<RegisterView> createState() => _RegisterViewState();
+  //_RegisterViewState createState() => _RegisterViewState();
 }
 
 class _RegisterViewState extends State<RegisterView> {
@@ -34,7 +38,16 @@ class _RegisterViewState extends State<RegisterView> {
     return BlocListener<AuthCubit, AuthStates>(
       listener: (context, state) {
         if (state is RegisterSuccessState) {
-          debugPrint('Doneeee');
+          if (widget.index == 0) {
+            pushAndRemoveUntil(context, const DoctorUploadData());
+          } else {
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (context) => const PatientMainPage(),
+              ),
+              (route) => false,
+            );
+          }
         } else if (state is RegisterErrorState) {
           Navigator.pop(context);
           showErrorDialog(context, state.error);
@@ -132,17 +145,17 @@ class _RegisterViewState extends State<RegisterView> {
                         child: ElevatedButton(
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              // if (widget.index == 0) {
-                              context.read<AuthCubit>().registerPatient(
-                                  _displayName.text,
-                                  _emailController.text,
-                                  _passwordController.text);
-                              // } else {
-                              //   context.read<AuthCubit>().registerPatient(
-                              //       _displayName.text,
-                              //       _emailController.text,
-                              //       _passwordController.text);
-                              // }
+                              if (widget.index == 0) {
+                                context.read<AuthCubit>().registerDoctor(
+                                    _displayName.text,
+                                    _emailController.text,
+                                    _passwordController.text);
+                              } else {
+                                context.read<AuthCubit>().registerPatient(
+                                    _displayName.text,
+                                    _emailController.text,
+                                    _passwordController.text);
+                              }
                             }
                           },
                           style: ElevatedButton.styleFrom(

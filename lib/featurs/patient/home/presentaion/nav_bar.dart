@@ -4,21 +4,25 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/text_style.dart';
+import '../../appointments/my_appointments.dart';
+import '../../profile/user_profile.dart';
+import '../../search/presentaion/view/search_view.dart';
+import 'patient_home_page.dart';
 
 class PatientMainPage extends StatefulWidget {
   const PatientMainPage({super.key});
 
   @override
-  _MainPageState createState() => _MainPageState();
+  State<PatientMainPage> createState() => _MainPageState();
 }
 
 class _MainPageState extends State<PatientMainPage> {
   int _selectedIndex = 0;
   final List _pages = [
-    // const PatientHomePage(),
-    // const SearchView(),
-    // const MyAppointments(),
-    // const PatientProfile(),
+    const PatientHomePage(),
+    const SearchView(),
+    const MyAppointments(),
+    const PatientProfile(),
   ];
 
   final FirebaseAuth _auth = FirebaseAuth.instance;

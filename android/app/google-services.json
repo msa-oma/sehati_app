@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "575013083230",
+    "project_id": "sehati-app-hms",
+    "storage_bucket": "sehati-app-hms.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:575013083230:android:3c874e74ffe80ae63afccf",
+        "android_client_info": {
+          "package_name": "com.example.sehati_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAy2Iz6Z3_lTTV-xB2RhhB2qa-yydhXGzA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

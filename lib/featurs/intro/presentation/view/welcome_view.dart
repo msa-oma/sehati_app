@@ -40,11 +40,11 @@ class WelcomeView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'اهلا بيك',
+                  'أهلاً بك',
                   style: getTitleStyle(fontSize: 38),
                 ),
                 Text(
-                  'سجل واحجز عند دكتورك وانت فالبيت',
+                  'سجل واحجز عند دكتورك وانت في البيت',
                   style: getbodyStyle(),
                 ),
               ],
@@ -70,7 +70,7 @@ class WelcomeView extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    'سجل دلوقتي كــ',
+                    'سجل الآن كـ',
                     style: getbodyStyle(fontSize: 18, color: AppColors.white),
                   ),
                   const SizedBox(
@@ -78,6 +78,7 @@ class WelcomeView extends StatelessWidget {
                   ),
                   Column(
                     children: [
+                      //register as doctor btn
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -102,6 +103,8 @@ class WelcomeView extends StatelessWidget {
                       const SizedBox(
                         height: 15,
                       ),
+
+                      //register as patient btn
                       GestureDetector(
                         onTap: () {
                           Navigator.push(

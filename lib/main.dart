@@ -12,10 +12,10 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: const FirebaseOptions(
-        apiKey: ' ', //put your FireBase api key
-        appId: 'com.example.se7ety_2_21',
-        messagingSenderId: '892515892327',
-        projectId: 'se7ety-1ae1c'),
+        apiKey: 'AIzaSyAy2Iz6Z3_lTTV-xB2RhhB2qa-yydhXGzA',
+        appId: 'com.example.sehati_app',
+        messagingSenderId: '575013083230',
+        projectId: 'sehati-app-hms'),
   );
   runApp(const MainApp());
 }

@@ -1,3 +1,17 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies{
+        //id 'com.google.gms.google-services' version '4.4.1' apply false
+        //don't forget to replace (.) to (:) after gms
+        classpath "com.google.gms:google-services:4.4.1"
+    }  
+}
+
+
+
 allprojects {
     repositories {
         google()

@@ -11,3 +11,11 @@ pushWithReplacment(context, Widget newView) {
     builder: (context) => newView,
   ));
 }
+
+pushAndRemoveUntil(context, Widget newView) {
+  Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (context) => newView,
+      ),
+      (route) => false);
+}

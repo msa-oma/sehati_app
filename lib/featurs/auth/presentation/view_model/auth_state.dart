@@ -25,3 +25,15 @@ class RegisterErrorState extends AuthStates {
 
   RegisterErrorState({required this.error});
 }
+
+// upload data
+
+class UploadDoctorDataLoadingState extends AuthStates {}
+
+class UploadDoctorDataSuccessState extends AuthStates {}
+
+class UploadDoctorDataErrorState extends AuthStates {
+  final String error;
+
+  UploadDoctorDataErrorState({required this.error});
+}

@@ -83,7 +83,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                   ),
                   const Spacer(),
 
-                  // if last page
+                  // if it's last page
                   (index == pages.length - 1)
                       ? CustomButton(
                           text: 'هيا بنا',
