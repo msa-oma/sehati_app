@@ -1,24 +1,21 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:sehati_app/featurs/auth/data/doctor_model.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/text_style.dart';
 import '../../../../../core/widgets/custom_btn.dart';
 import '../../../../../core/widgets/tile_widget.dart';
-import '../../data/doctor_model.dart';
 import 'booking_view.dart';
 import 'widgets/contact_icon.dart';
 
 class DoctorProfile extends StatefulWidget {
-  final String? email;
+  final DoctorModel doctorModel;
 
-  const DoctorProfile({super.key, this.email});
+  const DoctorProfile({super.key, required this.doctorModel});
   @override
   State<DoctorProfile> createState() => _DoctorProfileState();
 }
 
 class _DoctorProfileState extends State<DoctorProfile> {
-  late Doctor doctor;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,196 +33,169 @@ class _DoctorProfileState extends State<DoctorProfile> {
           ),
         ),
       ),
-      body: StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection('doctor')
-            .where('email', isEqualTo: widget.email)
-            .snapshots(),
-        builder: (BuildContext context, snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          var userData = snapshot.data!.docs.first;
-          doctor = Doctor(
-              name: userData['name'],
-              imageUrl: userData['image'],
-              specialization: userData['specialization'],
-              rating: userData['rating'],
-              email: userData['email'],
-              startHour: userData['openHour'],
-              endHour: userData['closeHour'],
-              location: userData['address']);
-          return Padding(
-            padding: const EdgeInsets.all(20),
-            child: SingleChildScrollView(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: SingleChildScrollView(
+            child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            // ------------ Header ---------------
+            Row(
               children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                // ------------ Header ---------------
-                Row(
+                Stack(
+                  alignment: Alignment.bottomRight,
                   children: [
-                    Stack(
-                      alignment: Alignment.bottomRight,
-                      children: [
-                        CircleAvatar(
-                          radius: 60,
+                    CircleAvatar(
+                      radius: 60,
+                      backgroundColor: AppColors.white,
+                      child: CircleAvatar(
                           backgroundColor: AppColors.white,
-                          child: CircleAvatar(
-                            backgroundColor: AppColors.white,
-                            radius: 60,
-                            backgroundImage: (userData['image'] != null)
-                                ? NetworkImage(userData['image'])
-                                    as ImageProvider
-                                : const AssetImage('assets/doctor.png'),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      width: 30,
-                    ),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "د. ${userData['name']}",
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: getTitleStyle(),
-                          ),
-                          Text(
-                            userData['specialization'],
-                            style: getbodyStyle(),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                userData['rating'].toString(),
-                                style: getbodyStyle(),
-                              ),
-                              const SizedBox(
-                                width: 3,
-                              ),
-                              const Icon(
-                                Icons.star_rounded,
-                                size: 20,
-                                color: Colors.orange,
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            children: [
-                              IconTile(
-                                onTap: () {},
-                                backColor: AppColors.blueSoftSky,
-                                imgAssetPath: Icons.phone,
-                                num: '1',
-                              ),
-                              if (userData['phone2'] != null)
-                                IconTile(
-                                  onTap: () {},
-                                  backColor: AppColors.blueSoftSky,
-                                  imgAssetPath: Icons.phone,
-                                  num: '2',
-                                ),
-                            ],
-                          )
-                        ],
-                      ),
+                          radius: 60,
+                          backgroundImage:
+                              NetworkImage(widget.doctorModel.image)
+                                  as ImageProvider),
                     ),
                   ],
                 ),
                 const SizedBox(
-                  height: 25,
+                  width: 30,
                 ),
-                Text(
-                  "نبذة تعريفية",
-                  style: getbodyStyle(fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  userData['bio'],
-                  style: getsmallStyle(),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  padding: const EdgeInsets.all(15),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: AppColors.blueSoftSky,
-                  ),
+                Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TileWidget(
-                          text:
-                              '${userData['openHour']} - ${userData['closeHour']}',
-                          icon: Icons.watch_later_outlined),
+                      Text(
+                        "د. ${widget.doctorModel.name}",
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: getTitleStyle(),
+                      ),
+                      Text(
+                        widget.doctorModel.specialization,
+                        style: getbodyStyle(),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            widget.doctorModel.rating.toString(),
+                            style: getbodyStyle(),
+                          ),
+                          const SizedBox(
+                            width: 3,
+                          ),
+                          const Icon(
+                            Icons.star_rounded,
+                            size: 20,
+                            color: Colors.orange,
+                          ),
+                        ],
+                      ),
                       const SizedBox(
                         height: 15,
                       ),
-                      TileWidget(
-                          text: userData['address'],
-                          icon: Icons.location_on_rounded),
-                    ],
-                  ),
-                ),
-                const Divider(),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "معلومات الاتصال",
-                  style: getbodyStyle(fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  padding: const EdgeInsets.all(15),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: AppColors.blueSoftSky,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TileWidget(text: userData['email'], icon: Icons.email),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      TileWidget(text: userData['phone1'], icon: Icons.call),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      if (userData['phone2'] != null)
-                        TileWidget(text: userData['phone2'], icon: Icons.call),
+                      Row(
+                        children: [
+                          IconTile(
+                            onTap: () {},
+                            backColor: AppColors.blueSoftSky,
+                            imgAssetPath: Icons.phone,
+                            num: '1',
+                          ),
+                          IconTile(
+                            onTap: () {},
+                            backColor: AppColors.blueSoftSky,
+                            imgAssetPath: Icons.phone,
+                            num: '2',
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),
               ],
-            )),
-          );
-        },
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            Text(
+              "نبذة تعريفية",
+              style: getbodyStyle(fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              widget.doctorModel.bio,
+              style: getsmallStyle(),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              padding: const EdgeInsets.all(15),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: AppColors.blueSoftSky,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TileWidget(
+                      text:
+                          '${widget.doctorModel.openHour} - ${widget.doctorModel.closeHour}',
+                      icon: Icons.watch_later_outlined),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TileWidget(
+                      text: widget.doctorModel.address,
+                      icon: Icons.location_on_rounded),
+                ],
+              ),
+            ),
+            const Divider(),
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              "معلومات الاتصال",
+              style: getbodyStyle(fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              padding: const EdgeInsets.all(15),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: AppColors.blueSoftSky,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TileWidget(text: widget.doctorModel.email, icon: Icons.email),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TileWidget(text: widget.doctorModel.phone1, icon: Icons.call),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TileWidget(text: widget.doctorModel.phone2, icon: Icons.call),
+                ],
+              ),
+            ),
+          ],
+        )),
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(12),
@@ -235,7 +205,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => BookingView(doctor: doctor),
+                builder: (context) => BookingView(doctor: widget.doctorModel),
               ),
             );
           },

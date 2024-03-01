@@ -29,6 +29,8 @@ class MainApp extends StatelessWidget {
         create: (context) => AuthCubit(),
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
+
+          //TODO:handel theming like pro
           theme: ThemeData(
               scaffoldBackgroundColor: AppColors.white,
               snackBarTheme:

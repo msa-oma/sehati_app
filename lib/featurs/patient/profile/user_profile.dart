@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sehati_app/featurs/patient/profile/user_settings.dart';
 
 import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/text_style.dart';
@@ -89,8 +90,12 @@ class _PatientProfileState extends State<PatientProfile> {
             onPressed: () async {
               await FirebaseAuth.instance
                   .sendPasswordResetEmail(email: 'm.s.a.oma6727@gmail.com');
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: (contex) => const UserSettings()));
+              if (context.mounted) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (contex) => const UserSettings()));
+              }
             },
           ),
         ],
@@ -109,6 +114,7 @@ class _PatientProfileState extends State<PatientProfile> {
               }
               var userData = snapshot.data;
               print(userData!['name']);
+              print("ji u");
               return Padding(
                 padding: const EdgeInsets.all(20),
                 child: SingleChildScrollView(
@@ -136,7 +142,7 @@ class _PatientProfileState extends State<PatientProfile> {
                                             ? FileImage(File(_imagePath!))
                                                 as ImageProvider
                                             : const AssetImage(
-                                                'assets/doc.png'),
+                                                'assets/doctor.png'),
                                   ),
                                 ),
                                 GestureDetector(
@@ -149,6 +155,7 @@ class _PatientProfileState extends State<PatientProfile> {
                                         .scaffoldBackgroundColor,
                                     child: const Icon(
                                       Icons.camera_alt_rounded,
+                                      color: AppColors.blueLagoon,
                                       size: 20,
                                       // color: AppColors.color1,
                                     ),

@@ -246,7 +246,7 @@ class _AppointmentHistoryListState extends State<AppointmentHistoryList> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        "اسم المريض: " + document['name'],
+                                        "اسم المريض: ${document['name']}",
                                       ),
                                       const SizedBox(
                                         height: 10,

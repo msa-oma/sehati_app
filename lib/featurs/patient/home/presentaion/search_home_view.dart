@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/text_style.dart';
 import '../../../../core/widgets/doctor_card.dart';
+import '../../../auth/data/doctor_model.dart';
 import '../../search/presentaion/view/doctor_profile.dart';
 
 class SearchHomeView extends StatefulWidget {
@@ -74,7 +75,20 @@ class _SearchHomeViewState extends State<SearchHomeView> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => DoctorProfile(
-                                    email: doctor['email'],
+                                    doctorModel: DoctorModel(
+                                        id: doctor.id,
+                                        name: doctor['name'],
+                                        image: doctor['image'],
+                                        specialization:
+                                            doctor['specialization'],
+                                        rating: doctor['rating'],
+                                        email: doctor['email'],
+                                        phone1: doctor['phone1'],
+                                        phone2: doctor['phone2'],
+                                        bio: doctor['bio'],
+                                        openHour: doctor['openHour'],
+                                        closeHour: doctor['closeHour'],
+                                        address: doctor['address']),
                                   ),
                                 ),
                               );

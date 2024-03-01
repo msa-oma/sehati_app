@@ -25,6 +25,7 @@ class _LoginViewState extends State<LoginView> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+// Related to the password field
   bool isVisable = true;
 
   String handleUserType() {

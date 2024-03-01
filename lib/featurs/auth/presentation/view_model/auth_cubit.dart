@@ -13,11 +13,15 @@ class AuthCubit extends Cubit<AuthStates> {
     emit(RegisterLoadingState());
 
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
         email: email,
         password: password,
-      );
-      emit(RegisterSuccessState());
+      )
+          .then((value) {
+        // for ex value.user?.displayName;
+        emit(RegisterSuccessState());
+      });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         emit(LoginErrorState(error: 'لا يوجد حساب على هذا الايميل'));

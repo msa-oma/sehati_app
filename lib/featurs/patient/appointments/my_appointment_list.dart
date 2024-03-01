@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -51,11 +50,11 @@ class _MyAppointmentListState extends State<MyAppointmentList> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return CupertinoAlertDialog(
+        return AlertDialog(
           title: const Text("حذف الحجز"),
-          content: const Text("هل متاكد من حذف هذا الحجز ؟"),
+          content: const Text("هل انت متأكد من حذف هذا الحجز ؟"),
           actions: [
-            // nooooooooooo
+            // no
             TextButton(
               child: const Text("لا"),
               onPressed: () {
@@ -63,7 +62,7 @@ class _MyAppointmentListState extends State<MyAppointmentList> {
               },
             ),
 
-            /// deleteeeeeeeeeee
+            /// delete
             TextButton(
               child: const Text("نعم"),
               onPressed: () {
@@ -120,7 +119,9 @@ class _MyAppointmentListState extends State<MyAppointmentList> {
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: AppColors.blueLagoon,
+              ),
             );
           }
           return snapshot.data?.size == 0

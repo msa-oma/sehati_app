@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:sehati_app/featurs/auth/data/doctor_model.dart';
 
+import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/text_style.dart';
 import '../../../../core/widgets/doctor_card.dart';
 import '../../search/presentaion/view/doctor_profile.dart';
@@ -31,7 +33,7 @@ class _ExploreListState extends State<ExploreList> {
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(color: AppColors.blueLagoon),
             );
           }
           return snapshot.data!.docs.isEmpty
@@ -70,8 +72,20 @@ class _ExploreListState extends State<ExploreList> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => DoctorProfile(
-                                  email: doctor['email'],
-                                ),
+                                    doctorModel: DoctorModel(
+                                        id: doctor.id,
+                                        name: doctor['name'],
+                                        image: doctor['image'],
+                                        specialization:
+                                            doctor['specialization'],
+                                        rating: doctor['rating'],
+                                        email: doctor['email'],
+                                        phone1: doctor['phone1'],
+                                        phone2: doctor['phone2'],
+                                        bio: doctor['bio'],
+                                        openHour: doctor['openHour'],
+                                        closeHour: doctor['closeHour'],
+                                        address: doctor['address'])),
                               ),
                             );
                           });

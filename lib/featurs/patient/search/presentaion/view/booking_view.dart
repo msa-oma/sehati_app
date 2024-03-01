@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:sehati_app/featurs/auth/data/doctor_model.dart';
 
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/text_style.dart';
@@ -9,11 +10,10 @@ import '../../../../../core/widgets/custom_alert_dialog.dart';
 import '../../../../../core/widgets/custom_btn.dart';
 import '../../../../../core/widgets/doctor_card.dart';
 import '../../../appointments/my_appointments.dart';
-import '../../data/doctor_model.dart';
 import 'widgets/available_appointments.dart';
 
 class BookingView extends StatefulWidget {
-  final Doctor doctor;
+  final DoctorModel doctor;
 
   const BookingView({
     super.key,
@@ -52,7 +52,7 @@ class _BookingViewState extends State<BookingView> {
     times.clear();
     AppointmentService()
         .getAvailableAppointments(
-            selectedDate, widget.doctor.startHour, widget.doctor.endHour)
+            selectedDate, widget.doctor.openHour, widget.doctor.closeHour)
         .then((avilableTimes) {
       for (var i in avilableTimes) {
         times.add(i.hour);
@@ -64,7 +64,7 @@ class _BookingViewState extends State<BookingView> {
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2023),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2030),
       builder: (BuildContext context, Widget? child) {
         return Theme(
@@ -123,7 +123,7 @@ class _BookingViewState extends State<BookingView> {
             children: [
               DoctorCard(
                   name: widget.doctor.name,
-                  image: widget.doctor.imageUrl,
+                  image: widget.doctor.image,
                   specialization: widget.doctor.specialization,
                   rating: widget.doctor.rating,
                   onPressed: () {}),
@@ -282,7 +282,8 @@ class _BookingViewState extends State<BookingView> {
 
                     // available times chips
                     Wrap(spacing: 8.0, children: [
-                      for (int i = 0; i < times.length; i++)
+                      // the three dots indicates that u r working in design "separator"
+                      for (int i = 0; i < times.length; i++) ...{
                         ChoiceChip(
                           backgroundColor: AppColors.blueSoftSky,
                           selectedColor: AppColors.blueLagoon,
@@ -296,16 +297,16 @@ class _BookingViewState extends State<BookingView> {
                           ),
                           selected: isSelected.contains(i),
                           onSelected: (selected) {
+                            isSelected.clear();
                             setState(() {
-                              isSelected.contains(i)
-                                  ? isSelected.remove(i)
-                                  : isSelected.add(i);
+                              isSelected.add(i);
                               // to add 0 before hours < 10 (9:00  ===> 09:00)
                               dateTime =
                                   '${(times[i] < 10) ? '0' : ''}${times[i].toString()}:00';
                             });
                           },
                         )
+                      }
                     ]),
                     const SizedBox(
                       height: 20,
@@ -322,8 +323,7 @@ class _BookingViewState extends State<BookingView> {
         child: CustomButton(
           text: 'تأكيد الحجز',
           onPressed: () {
-            //TODO:handel this
-            if (_formKey.currentState!.validate() && isSelected != -1) {
+            if (_formKey.currentState!.validate() && isSelected.first != -1) {
               _createAppointment();
               showAlertDialog(
                 context,
@@ -359,7 +359,7 @@ class _BookingViewState extends State<BookingView> {
       'phone': _phoneController.text,
       'description': _descriptionController.text,
       'doctor': widget.doctor.name,
-      'location': widget.doctor.location,
+      'location': widget.doctor.address,
       'date': DateTime.parse('${dateUTC!} ${dateTime!}:00'),
       'isComplete': false,
       'rating': null
@@ -377,7 +377,7 @@ class _BookingViewState extends State<BookingView> {
       'phone': _phoneController.text,
       'description': _descriptionController.text,
       'doctor': widget.doctor.name,
-      'location': widget.doctor.location,
+      'location': widget.doctor.address,
       'date': DateTime.parse('${dateUTC!} ${dateTime!}:00'),
       'isComplete': false,
       'rating': null

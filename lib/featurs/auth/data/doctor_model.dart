@@ -8,8 +8,8 @@ class DoctorModel {
   final String phone1;
   final String phone2;
   final String bio;
-  final int openHour;
-  final int closeHour;
+  final String openHour;
+  final String closeHour;
   final String address;
 
   DoctorModel(

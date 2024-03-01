@@ -24,6 +24,7 @@ class _SplashViewState extends State<SplashView> {
     super.initState();
 
     _getUser();
+
     Future.delayed(
       const Duration(seconds: 4),
       () {
@@ -33,7 +34,7 @@ class _SplashViewState extends State<SplashView> {
               // const OnboardingView()
 
               //ToDO: handel this whether user is doctor or patient
-              (user != null) ? const DoctorMainPage() : const WelcomeView(),
+              (user != null) ? const PatientMainPage() : const WelcomeView(),
         ));
       },
     );

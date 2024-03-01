@@ -381,8 +381,8 @@ class _DoctorUploadDataState extends State<DoctorUploadData> {
                       phone1: _phone1.text,
                       phone2: _phone2.text,
                       bio: _bio.text,
-                      openHour: int.parse(_startTime),
-                      closeHour: int.parse(_endTime),
+                      openHour: _startTime,
+                      closeHour: _endTime,
                       address: _address.text));
                 }
               },
@@ -406,33 +406,45 @@ class _DoctorUploadDataState extends State<DoctorUploadData> {
 
   showStartTimePicker() async {
     final datePicked = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-      // builder: (context, child) {
-      //   return Theme(
-      //     data: ThemeData(
-      //       timePickerTheme: TimePickerThemeData(
-      //           helpTextStyle: TextStyle(color: AppColors.color1),
-      //           backgroundColor: Theme.of(context).scaffoldBackgroundColor),
-      //       colorScheme: ColorScheme.light(
-      //         background: Theme.of(context).scaffoldBackgroundColor,
-      //         primary: AppColors.color1, // header background color
-      //         secondary: AppColors.black,
-      //         onSecondary: AppColors.black,
-      //         onPrimary: AppColors.black, // header text color
-      //         onSurface: AppColors.black, // body text color
-      //         surface: AppColors.black, // body text color
-      //       ),
-      //       textButtonTheme: TextButtonThemeData(
-      //         style: TextButton.styleFrom(
-      //           foregroundColor: AppColors.color1, // button text color
-      //         ),
-      //       ),
-      //     ),
-      //     child: child!,
-      //   );
-      // },
-    );
+        context: context,
+        initialTime: TimeOfDay.now(),
+        builder: (BuildContext context, Widget? child) {
+          return Theme(
+            data: ThemeData.light().copyWith(
+              primaryColor: AppColors.blueLagoon,
+              colorScheme:
+                  const ColorScheme.light(primary: AppColors.blueLagoon),
+              buttonTheme:
+                  const ButtonThemeData(textTheme: ButtonTextTheme.primary),
+            ),
+            child: child!,
+          );
+        }
+        // builder: (context, child) {
+        //   return Theme(
+        //     data: ThemeData(
+        //       timePickerTheme: TimePickerThemeData(
+        //           helpTextStyle: TextStyle(color: AppColors.color1),
+        //           backgroundColor: Theme.of(context).scaffoldBackgroundColor),
+        //       colorScheme: ColorScheme.light(
+        //         background: Theme.of(context).scaffoldBackgroundColor,
+        //         primary: AppColors.color1, // header background color
+        //         secondary: AppColors.black,
+        //         onSecondary: AppColors.black,
+        //         onPrimary: AppColors.black, // header text color
+        //         onSurface: AppColors.black, // body text color
+        //         surface: AppColors.black, // body text color
+        //       ),
+        //       textButtonTheme: TextButtonThemeData(
+        //         style: TextButton.styleFrom(
+        //           foregroundColor: AppColors.color1, // button text color
+        //         ),
+        //       ),
+        //     ),
+        //     child: child!,
+        //   );
+        // },
+        );
 
     if (datePicked != null) {
       setState(() {
@@ -446,6 +458,17 @@ class _DoctorUploadDataState extends State<DoctorUploadData> {
       context: context,
       initialTime: TimeOfDay.fromDateTime(
           DateTime.now().add(const Duration(minutes: 15))),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            primaryColor: AppColors.blueLagoon,
+            colorScheme: const ColorScheme.light(primary: AppColors.blueLagoon),
+            buttonTheme:
+                const ButtonThemeData(textTheme: ButtonTextTheme.primary),
+          ),
+          child: child!,
+        );
+      },
     );
 
     if (timePicker != null) {
