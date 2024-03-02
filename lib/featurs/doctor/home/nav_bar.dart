@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../../../core/utils/app_colors.dart';
+import '../profile/doc_profile_view.dart';
 import 'doctor_home_page.dart';
 
 class DoctorMainPage extends StatefulWidget {
@@ -19,7 +20,7 @@ class _MainPageState extends State<DoctorMainPage> {
   final List _pages = [
     const DoctorHomePage(),
     const DoctorHomePage(),
-    const DoctorHomePage(),
+    const DoctorProfilePage(),
   ];
 
   final FirebaseAuth _auth = FirebaseAuth.instance;

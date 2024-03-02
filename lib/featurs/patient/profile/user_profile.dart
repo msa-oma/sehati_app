@@ -88,8 +88,8 @@ class _PatientProfileState extends State<PatientProfile> {
               color: AppColors.white,
             ),
             onPressed: () async {
-              await FirebaseAuth.instance
-                  .sendPasswordResetEmail(email: 'm.s.a.oma6727@gmail.com');
+              // await FirebaseAuth.instance
+              //     .sendPasswordResetEmail(email: 'm.s.a.oma6727@gmail.com');
               if (context.mounted) {
                 Navigator.push(
                     context,

@@ -26,7 +26,7 @@ class _LoginViewState extends State<LoginView> {
   final TextEditingController _passwordController = TextEditingController();
 
 // Related to the password field
-  bool isVisable = true;
+  bool isVisible = true;
 
   String handleUserType() {
     return widget.index == 0 ? 'دكتور' : 'مريض';
@@ -101,24 +101,24 @@ class _LoginViewState extends State<LoginView> {
                     TextFormField(
                       textAlign: TextAlign.end,
                       style: const TextStyle(color: AppColors.blackCharcoal),
-                      obscureText: isVisable,
+                      obscureText: isVisible,
                       keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
                         hintText: '********',
                         suffixIcon: IconButton(
                             onPressed: () {
                               setState(() {
-                                isVisable = !isVisable;
+                                isVisible = !isVisible;
                               });
                             },
-                            icon: Icon((isVisable)
+                            icon: Icon((isVisible)
                                 ? Icons.remove_red_eye
                                 : Icons.visibility_off_rounded)),
                         prefixIcon: const Icon(Icons.lock),
                       ),
                       controller: _passwordController,
                       validator: (value) {
-                        if (value!.isEmpty) return 'من فضلك ادخل كلمة السر';
+                        if (value!.isEmpty) return 'من فضلك أدخل كلمة المرور';
                         return null;
                       },
                     ),
@@ -126,7 +126,7 @@ class _LoginViewState extends State<LoginView> {
                       alignment: Alignment.centerRight,
                       padding: const EdgeInsets.only(top: 5, right: 10),
                       child: Text(
-                        'نسيت كلمة السر ؟',
+                        'نسيت كلمة المرور ؟',
                         style: getsmallStyle(),
                       ),
                     ),

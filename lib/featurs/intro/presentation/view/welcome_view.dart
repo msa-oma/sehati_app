@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sehati_app/core/services/app_local_storage.dart';
 
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/text_style.dart';
@@ -81,6 +82,7 @@ class WelcomeView extends StatelessWidget {
                       //register as doctor btn
                       GestureDetector(
                         onTap: () {
+                          AppLocal.cacheDataX(AppLocal.userIndex, 0);
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -107,6 +109,8 @@ class WelcomeView extends StatelessWidget {
                       //register as patient btn
                       GestureDetector(
                         onTap: () {
+                          AppLocal.cacheDataX(AppLocal.userIndex, 1);
+
                           Navigator.push(
                               context,
                               MaterialPageRoute(

@@ -9,18 +9,18 @@ class AuthCubit extends Cubit<AuthStates> {
   AuthCubit() : super(AuthInitSatete());
 
   // login
-  login(String email, String password) async {
+  login(String email, String password) {
     emit(RegisterLoadingState());
-
     try {
-      await FirebaseAuth.instance
+      print("try to log in bro");
+      FirebaseAuth.instance
           .signInWithEmailAndPassword(
         email: email,
         password: password,
       )
           .then((value) {
         // for ex value.user?.displayName;
-        emit(RegisterSuccessState());
+        emit(LoginSuccessState());
       });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {

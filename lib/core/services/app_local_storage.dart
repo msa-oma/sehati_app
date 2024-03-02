@@ -2,8 +2,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AppLocal {
   static String isDoctorImgUploadedKey = 'ISDOCTORIMGUPLOADED';
-  static String isOnBoardingScreenSkipedKey = 'ISONBOARDINGSCREENSKIPED';
   static String isOnBoaringScreenEndedKey = 'ISONBOARDINGSCREENENDED';
+  static String userIndex = 'USERINDEX';
 
   static cacheDataX(String key, value) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();

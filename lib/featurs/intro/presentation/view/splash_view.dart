@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sehati_app/core/services/app_local_storage.dart';
 import 'package:sehati_app/featurs/doctor/home/nav_bar.dart';
 
 import '../../../patient/home/presentaion/nav_bar.dart';
-import 'onboarrding_view.dart';
+import 'onboarding_view.dart';
 import 'welcome_view.dart';
 
 class SplashView extends StatefulWidget {
@@ -15,6 +16,8 @@ class SplashView extends StatefulWidget {
 
 class _SplashViewState extends State<SplashView> {
   User? user;
+  late bool isOnboardingSkippedOrEnded;
+  late int? userIndex;
   Future<void> _getUser() async {
     user = FirebaseAuth.instance.currentUser;
   }
@@ -22,6 +25,11 @@ class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     super.initState();
+    AppLocal.getCachedDataX(AppLocal.isOnBoaringScreenEndedKey).then((value) {
+      isOnboardingSkippedOrEnded = value ?? false;
+      AppLocal.getCachedDataX(AppLocal.userIndex)
+          .then((value) => userIndex = value);
+    });
 
     _getUser();
 
@@ -29,12 +37,18 @@ class _SplashViewState extends State<SplashView> {
       const Duration(seconds: 4),
       () {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) =>
-              //todo: handle onboarding appearents with shared preferences
-              // const OnboardingView()
-
-              //ToDO: handel this whether user is doctor or patient
-              (user != null) ? const PatientMainPage() : const WelcomeView(),
+          builder: (context) {
+            if (!isOnboardingSkippedOrEnded) {
+              return const OnboardingView();
+            } else if (userIndex == 0) {
+              return (user != null)
+                  ? const DoctorMainPage()
+                  : const WelcomeView();
+            }
+            return (user != null)
+                ? const PatientMainPage()
+                : const WelcomeView();
+          },
         ));
       },
     );

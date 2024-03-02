@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sehati_app/core/services/app_local_storage.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../core/funcs/routing.dart';
@@ -43,6 +44,7 @@ class _OnboardingViewState extends State<OnboardingView> {
         actions: [
           TextButton(
               onPressed: () {
+                AppLocal.cacheDataX(AppLocal.isOnBoaringScreenEndedKey, true);
                 pushWithReplacment(context, const WelcomeView());
               },
               child: Text(
@@ -88,6 +90,9 @@ class _OnboardingViewState extends State<OnboardingView> {
                       ? CustomButton(
                           text: 'هيا بنا',
                           onPressed: () {
+                            AppLocal.cacheDataX(
+                                AppLocal.isOnBoaringScreenEndedKey, true);
+
                             pushWithReplacment(context, const WelcomeView());
                           },
                         )
