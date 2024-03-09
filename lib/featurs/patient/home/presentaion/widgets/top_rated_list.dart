@@ -22,7 +22,7 @@ class _TopRatedListState extends State<TopRatedList> {
     return SafeArea(
       child: StreamBuilder(
         stream: FirebaseFirestore.instance
-            .collection('doctor')
+            .collection('doctors')
             .orderBy('rating', descending: true)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {

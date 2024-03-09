@@ -53,12 +53,14 @@ class DoctorCard extends StatelessWidget {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: AppColors.white),
-                    child: Image.network(
-                      image,
-                      height: 50,
-                      width: 50,
-                      fit: BoxFit.contain,
-                    ),
+                    child: image.isEmpty
+                        ? Image.asset('assets/doctor.png')
+                        : Image.network(
+                            image,
+                            height: 50,
+                            width: 50,
+                            fit: BoxFit.contain,
+                          ),
                   ),
                 ),
                 const SizedBox(

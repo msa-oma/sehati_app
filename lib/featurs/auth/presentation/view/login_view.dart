@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:sehati_app/featurs/doctor/home/nav_bar.dart';
 import '../../../../core/funcs/email_validate.dart';
 import '../../../../core/funcs/routing.dart';
 import '../../../../core/utils/app_colors.dart';
@@ -9,7 +9,6 @@ import '../../../../core/widgets/custom_dialog.dart';
 import '../../../patient/home/presentaion/nav_bar.dart';
 import '../view_model/auth_cubit.dart';
 import '../view_model/auth_state.dart';
-import 'doctor_upload_view.dart';
 import 'signup_view.dart';
 
 class LoginView extends StatefulWidget {
@@ -38,7 +37,7 @@ class _LoginViewState extends State<LoginView> {
       listener: (context, state) {
         if (state is LoginSuccessState) {
           if (widget.index == 0) {
-            pushAndRemoveUntil(context, const DoctorUploadData());
+            pushAndRemoveUntil(context, const DoctorMainPage());
           } else {
             Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
@@ -86,9 +85,9 @@ class _LoginViewState extends State<LoginView> {
                       textInputAction: TextInputAction.next,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'من فضلك ادخل الايميل';
+                          return 'من فضلك أدخل الايميل';
                         } else if (!emailValidate(value)) {
-                          return 'من فضلك ادخل البريد الالكتروني صحيحا';
+                          return 'من فضلك أدخل البريد الالكتروني صحيحاً';
                         } else {
                           return null;
                         }
@@ -176,7 +175,7 @@ class _LoginViewState extends State<LoginView> {
                                 ));
                               },
                               child: Text(
-                                'سجل الان',
+                                'سجل الآن',
                                 style:
                                     getbodyStyle(color: AppColors.blueLagoon),
                               ))

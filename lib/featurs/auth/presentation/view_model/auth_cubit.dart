@@ -10,7 +10,7 @@ class AuthCubit extends Cubit<AuthStates> {
 
   // login
   login(String email, String password) {
-    emit(RegisterLoadingState());
+    emit(LoginLoadingState());
     try {
       print("try to log in bro");
       FirebaseAuth.instance
@@ -111,7 +111,8 @@ class AuthCubit extends Cubit<AuthStates> {
     emit(UploadDoctorDataLoadingState());
 
     try {
-      FirebaseFirestore.instance.collection('doctor').doc(doctor.id).set({
+      //TODO:doctor or doctors
+      FirebaseFirestore.instance.collection('doctors').doc(doctor.id).set({
         'image': doctor.image,
         'specialization': doctor.specialization,
         'rating': doctor.rating,

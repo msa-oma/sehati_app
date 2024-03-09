@@ -27,7 +27,7 @@ class _ExploreListState extends State<ExploreList> {
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
-            .collection('doctor')
+            .collection('doctors')
             .where('specialization', isEqualTo: widget.specialization)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
